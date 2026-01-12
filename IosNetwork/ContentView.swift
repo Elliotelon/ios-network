@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var viewModel = PostViewModel()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List(viewModel.posts) { post in
+                Text(post.title)
+            }
+            .navigationTitle("Posts")
+            .onAppear {
+                viewModel.fetchPosts()
+            }
         }
-        .padding()
     }
 }
 
